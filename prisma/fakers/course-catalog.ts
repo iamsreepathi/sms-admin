@@ -104,3 +104,39 @@ export async function fakeCategories(client: PrismaClient) {
   }
   return data;
 }
+
+export async function fakeCourses(client: PrismaClient) {
+  let data = [];
+  const categories = await client.category.findMany();
+  let id = 0;
+
+  for (const cat of categories) {
+    const ratings = Number(faker.number.bigInt({ min: 100, max: 10000 }));
+    const teacher = await client.teacher.findFirst({
+      where: {
+        id: {
+          gt: id,
+        },
+      },
+    });
+    if (teacher) {
+      id = teacher.id;
+      for (let i = 0; i < 30; i++) {
+        const course = {
+          name: faker.person.fullName(),
+          catId: cat.id,
+          description: faker.lorem.paragraph(8),
+          ratings,
+          overallRating: faker.number.int({
+            min: ratings * 3,
+            max: ratings * 5,
+          }),
+          teacherName: teacher.name,
+          teacherId: id,
+        };
+        data.push(course);
+      }
+    }
+  }
+  return data;
+}

@@ -1,7 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import { fakeStudents } from "./fakers/students";
 import { fakeTeachers } from "./fakers/teachers";
-import { fakeCategories, fakeDepartments } from "./fakers/course-catalog";
+import {
+  fakeCategories,
+  fakeCourses,
+  fakeDepartments,
+} from "./fakers/course-catalog";
 // import { fakeDepartments } from "./fakers/course-catalog";
 
 const client = new PrismaClient();
@@ -42,11 +46,21 @@ async function createCategories() {
   console.log("categories data is seeded");
 }
 
+async function createCourses() {
+  const data = await fakeCourses(client);
+  const courses = await client.course.createMany({
+    data,
+  });
+  console.log(courses);
+  console.log("course data is seeded");
+}
+
 const main = async () => {
-  await createStudents();
-  await createTeachers();
-  await createDepartments();
-  await createCategories();
+  // await createStudents();
+  // await createTeachers();
+  // await createDepartments();
+  // await createCategories();
+  // await createCourses();
 };
 
 main()
