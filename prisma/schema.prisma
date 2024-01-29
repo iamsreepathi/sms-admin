@@ -1,0 +1,90 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Gender {
+  Male
+  Female
+}
+
+model student {
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  dob DateTime @db.Date
+  father String
+  mother String
+  admission DateTime @db.Date
+  gender Gender
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model teacher {
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  dob DateTime @db.Date
+  father String
+  mother String
+  admission DateTime @db.Date
+  gender Gender
+  subject String
+  department department?
+  courses course[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model department {
+  id Int @id @default(autoincrement())
+  name String @unique
+  shortDesc String @db.VarChar(255)
+  description String @db.Text
+  phone String @db.VarChar(25)
+  email String @db.VarChar(50)
+  line1 String @db.VarChar(100)
+  line2 String @db.VarChar(50)
+  city String @db.VarChar(100)
+  region String @db.Char(2)
+  postalCode String @db.VarChar(6)
+  hod teacher @relation(fields: [teacherId], references: [id])
+  teacherId Int @unique
+  categories category[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model category {
+  id Int @id @default(autoincrement())
+  name String @unique
+  description String @db.Text
+  department department @relation(fields: [depId], references: [id], onDelete: Cascade)
+  depId Int
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  courses course[]
+}
+
+model course {
+  id Int @id @default(autoincrement())
+  name String @unique
+  category category @relation(fields: [catId], references: [id])
+  catId Int 
+  description String @db.Text
+  ratings Int @db.Integer
+  overallRating Int @db.Integer
+  teacherName String
+  teacher teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
+  teacherId Int
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
