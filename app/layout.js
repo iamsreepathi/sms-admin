@@ -3,6 +3,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
 import SideBar from "@/components/side-bar";
+import TheFooter from "@/components/the-footer";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -25,7 +26,10 @@ export default function RootLayout({ children }) {
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <SideBar />
-          <main className="p-8 w-full">{children}</main>
+          <div className="w-full">
+            <main className="p-8">{children}</main>
+            <TheFooter />
+          </div>
         </ThemeProvider>
       </body>
     </html>
