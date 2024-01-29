@@ -10,7 +10,7 @@ import TheUsers from "./icons/user";
 import UserGroup from "./icons/user-group";
 import TheLibrary from "./icons/library";
 
-const links = [
+export const links = [
   {
     title: "Dashboard",
     href: "/",
