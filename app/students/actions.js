@@ -39,8 +39,8 @@ export async function addStudent(payload) {
   let status = 201;
   try {
     const data = StudentSchema.parse(payload);
-    // const res = await prisma.student.create({ data });
-    return { status, data };
+    const res = await prisma.student.create({ data });
+    return { status, data: res };
   } catch (error) {
     let errors = {};
     if (error instanceof ZodError) {
