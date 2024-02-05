@@ -82,6 +82,16 @@ CREATE TABLE "course" (
     CONSTRAINT "course_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateView
+CREATE or REPLACE VIEW "available_hods"
+AS
+SELECT 
+    teacher.id as value, 
+    teacher.name as label
+FROM teacher 
+LEFT JOIN department ON teacher.id = department."teacherId" 
+WHERE department."teacherId" IS NULL
+
 -- CreateIndex
 CREATE UNIQUE INDEX "student_email_key" ON "student"("email");
 

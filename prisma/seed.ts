@@ -61,6 +61,8 @@ const main = async () => {
   // await createDepartments();
   // await createCategories();
   // await createCourses();
+  // const hods = await client.available_hods.findMany();
+  // console.log(hods);
 };
 
 main()

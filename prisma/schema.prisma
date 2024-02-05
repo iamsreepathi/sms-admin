@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["views"]
 }
 
 datasource db {
@@ -87,4 +88,9 @@ model course {
   teacherId Int
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
+}
+
+view available_hods {
+  value Int @unique
+  label String
 }

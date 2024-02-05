@@ -17,7 +17,7 @@ export default function DialogBox({ Component, btntext = "Add Student" }) {
       <DialogTrigger asChild>
         <Button>{btntext}</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[625px] md:max-w-[725px]">
+      <DialogContent className="sm:max-w-[625px] md:max-w-[725px] overflow-y-scroll max-h-screen">
         <DialogHeader>
           <DialogTitle>Add student profile</DialogTitle>
           <DialogDescription>
