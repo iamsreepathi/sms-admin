@@ -2,7 +2,7 @@
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { StudentSchema } from "@/lib/schema";
+import { TeacherSchema } from "@/lib/schema";
 import {
   Form,
   FormControl,
@@ -28,13 +28,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { addStudent } from "./actions";
 import { useToast } from "@/components/ui/use-toast";
+import { addTeacher } from "./actions";
 
-export default function AddStudent({ setOpen }) {
+export default function AddTeacher({ setOpen }) {
   const { toast } = useToast();
   const form = useForm({
-    resolver: zodResolver(StudentSchema),
+    resolver: zodResolver(TeacherSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -43,11 +43,12 @@ export default function AddStudent({ setOpen }) {
       dob: "",
       admission: "",
       gender: "Male",
+      subject: "",
     },
   });
 
   const onSubmit = async (data) => {
-    const res = await addStudent(data);
+    const res = await addTeacher(data);
     if (res.status === 422) {
       for (const key in res.errors) {
         form.setError(key, {
@@ -68,8 +69,8 @@ export default function AddStudent({ setOpen }) {
     setOpen(false);
     toast({
       variant: "success",
-      title: "Student Created",
-      description: `New student ${res.data.name} is successfully admitted.`,
+      title: "Teacher Created",
+      description: `New teacher ${res.data.name} is successfully admitted.`,
     });
   };
   return (
@@ -236,9 +237,22 @@ export default function AddStudent({ setOpen }) {
               </FormItem>
             )}
           />
+          <FormField
+            control={form.control}
+            name="subject"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Primary Subject</FormLabel>
+                <FormControl>
+                  <Input placeholder="Chemistry" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
         <Button type="submit" className="w-full">
-          Add Student
+          Add Teacher
         </Button>
       </form>
     </Form>
