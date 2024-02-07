@@ -10,7 +10,12 @@ import {
 } from "@/components/ui/dialog";
 import { useState } from "react";
 
-export default function DialogBox({ Component, btntext = "Add Student" }) {
+export default function DialogBox({
+  Component,
+  btntext = "Add Student",
+  title,
+  description,
+}) {
   const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -19,10 +24,8 @@ export default function DialogBox({ Component, btntext = "Add Student" }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[625px] md:max-w-[725px] overflow-y-scroll max-h-screen">
         <DialogHeader>
-          <DialogTitle>Add student profile</DialogTitle>
-          <DialogDescription>
-            Add a profile here. Click submit button when you're done.
-          </DialogDescription>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4">
           <Component.type {...Component.props} setOpen={setOpen} />

@@ -23,6 +23,8 @@ export default async function TheDepartments() {
         <DataSearch placeholder="John Doe" />
         <DialogBox
           btntext="Add Department"
+          description="Add a new department here. Click submit button when you're done."
+          title="Create a new department"
           Component={<AddDepartment teachers={teachers} />}
         />
       </div>

@@ -16,7 +16,12 @@ export default async function TheStudents() {
       <PageTitle title="Teachers" />
       <div className="flex items-center justify-between">
         <DataSearch placeholder="John Doe" />
-        <DialogBox btntext="Add Teacher" Component={<AddTeacher />} />
+        <DialogBox
+          description="Add a new teacher profile here. Click submit button when you're done."
+          title="Create a teacher"
+          btntext="Add Teacher"
+          Component={<AddTeacher />}
+        />
       </div>
       {error && (
         <Alert className="space-y-2" variant="destructive">
