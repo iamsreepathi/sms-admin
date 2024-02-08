@@ -15,12 +15,13 @@ export default function DialogBox({
   btntext = "Add Student",
   title,
   description,
+  variant = "default",
 }) {
   const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>{btntext}</Button>
+        <Button variant={variant}>{btntext}</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[625px] md:max-w-[725px] overflow-y-scroll max-h-screen">
         <DialogHeader>

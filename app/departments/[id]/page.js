@@ -3,10 +3,18 @@ import { notFound } from "next/navigation";
 import { getDepartment } from "./actions";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import ThePhone from "@/components/icons/phone";
 import TheEnvelope from "@/components/icons/envelope";
 import RightArrow from "@/components/icons/right-arrow";
+import DialogBox from "@/components/dialog-box";
+import AddCategory from "./add-category";
 
 export default async function TheDepartment({ params }) {
   const depId = Number(params.id);
@@ -29,7 +37,7 @@ export default async function TheDepartment({ params }) {
       </section>
       <section className="space-y-4">
         <PageTitle title="Contact Us" />
-        <div className="grid gap-2 grid-cols-3">
+        <div className="grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <Card>
             <CardHeader>
               <CardTitle>Address</CardTitle>
@@ -87,7 +95,7 @@ export default async function TheDepartment({ params }) {
           <CardHeader>
             <CardTitle>Programmes Offered</CardTitle>
           </CardHeader>
-          <CardContent className="grid grid-cols-6 gap-4">
+          <CardContent className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {dept.categories.map((c) => (
               <Button
                 key={c.id}
@@ -99,6 +107,14 @@ export default async function TheDepartment({ params }) {
               </Button>
             ))}
           </CardContent>
+          <CardFooter>
+            <DialogBox
+              btntext="Add Category"
+              title="Add a category"
+              description="Add a new category here. Click submit button when you're done."
+              Component={<AddCategory />}
+            />
+          </CardFooter>
         </Card>
       </section>
     </div>
