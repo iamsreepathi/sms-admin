@@ -3,6 +3,9 @@ import { useState } from "react";
 import { getStudents } from "@/app/students/actions";
 import DataTable from "@/components/data-table";
 import ThePagination from "@/components/the-pagination";
+import { Button } from "@/components/ui/button";
+import RightArrow from "@/components/icons/right-arrow";
+import Link from "next/link";
 
 const columns = [
   {
@@ -24,6 +27,19 @@ const columns = [
   {
     accessorKey: "admission",
     header: "Admitted On",
+  },
+  {
+    id: "actions",
+    enableHiding: false,
+    cell: ({ row }) => {
+      const data = row.original;
+
+      return (
+        <Link href={`students/${data.id}`} variant="icon">
+          <RightArrow className="w-6 h-6 rounded-full hover:bg-gray-300 p-1" />
+        </Link>
+      );
+    },
   },
 ];
 

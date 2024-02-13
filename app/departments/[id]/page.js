@@ -3,20 +3,31 @@ import { notFound } from "next/navigation";
 import { getDepartment } from "./actions";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import ThePhone from "@/components/icons/phone";
 import TheEnvelope from "@/components/icons/envelope";
 import RightArrow from "@/components/icons/right-arrow";
+import DialogBox from "@/components/dialog-box";
+import AddCategory from "./add-category";
+import { getAvailableHods } from "../actions";
+import UpdateHod from "./update-hod";
 
 export default async function TheDepartment({ params }) {
   const depId = Number(params.id);
   if (!depId) return notFound();
-  const dept = await getDepartment(depId);
+  const { dept, hod } = await getDepartment(depId);
+  const hods = await getAvailableHods();
   if (!dept) return notFound();
   return (
     <div className="space-y-4">
       <section className="bg-[url('/images/department-cover.jpg')] flex items-center justify-center h-96">
-        <div className="space-y-4 w-1/2">
+        <div className="space-y-4 w-2/3 lg:w-1/2">
           <PageTitle
             className="text-white text-2xl"
             title={`${dept.name} Department`}
@@ -29,7 +40,7 @@ export default async function TheDepartment({ params }) {
       </section>
       <section className="space-y-4">
         <PageTitle title="Contact Us" />
-        <div className="grid gap-2 grid-cols-3">
+        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           <Card>
             <CardHeader>
               <CardTitle>Address</CardTitle>
@@ -85,20 +96,90 @@ export default async function TheDepartment({ params }) {
       <section>
         <Card>
           <CardHeader>
+            <CardTitle>Head of Department</CardTitle>
+          </CardHeader>
+          <CardContent className="flex justify-between">
+            {hod && (
+              <div className="flex space-x-8">
+                <div>
+                  <img
+                    src="/images/teacher-profile.jpg"
+                    alt={hod.name}
+                    className="rounded-full w-36 h-36"
+                  />
+                </div>
+                <div>
+                  <ul className="space-y-1 text-sm">
+                    <li>
+                      <span className="font-semibold">Name:</span> {hod.name}
+                    </li>
+                    <li>
+                      <span className="font-semibold">Email Address:</span>{" "}
+                      {hod.email}
+                    </li>
+                    <li>
+                      <span className="font-semibold">Date of Birth:</span>{" "}
+                      {hod.dob.toDateString()}
+                    </li>
+                    <li>
+                      <span className="font-semibold">Admitted On:</span>{" "}
+                      {hod.admission.toDateString()}
+                    </li>
+                    <li>
+                      <span className="font-semibold">Specialization:</span>{" "}
+                      {hod.subject}
+                    </li>
+                    <li>
+                      <span className="font-semibold">Designation:</span> Senior
+                      Professor
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            )}
+            {!hod && (
+              <div className="text-sm">
+                <p>No Head of Department available.</p>
+              </div>
+            )}
+            <div>
+              <DialogBox
+                title="Update Head of Department"
+                btntext={hod ? "Edit Hod" : "Add Hod"}
+                description="Update head of dept. profile here. Click submit button once you're done."
+                Component={<UpdateHod hods={hods} />}
+              />
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+      <section>
+        <Card>
+          <CardHeader>
             <CardTitle>Programmes Offered</CardTitle>
           </CardHeader>
-          <CardContent className="grid grid-cols-6 gap-4">
+          <CardContent className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {dept.categories.map((c) => (
               <Button
                 key={c.id}
-                className="rounded-full flex justify-between"
+                className="rounded-full flex justify-between items-center"
                 variant="secondary"
               >
                 <span>{c.name}</span>
-                <RightArrow className="w-6 h-6 p-1 rounded-full hover:bg-gray-300" />
+                <Link href={`/departments/${depId}/categories?cat=${c.id}`}>
+                  <RightArrow className="w-6 h-6 p-1 rounded-full hover:bg-gray-300" />
+                </Link>
               </Button>
             ))}
           </CardContent>
+          <CardFooter>
+            <DialogBox
+              btntext="Add Category"
+              title="Add a category"
+              description="Add a new category here. Click submit button when you're done."
+              Component={<AddCategory />}
+            />
+          </CardFooter>
         </Card>
       </section>
     </div>

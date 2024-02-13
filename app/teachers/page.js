@@ -4,13 +4,29 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import TeachersTable from "./table";
+import DataSearch from "@/components/data-search";
+import AddTeacher from "./add-teacher";
+import DialogBox from "@/components/dialog-box";
+import { getDepartments } from "../departments/actions";
 
-export default async function TheStudents() {
+export default async function TheTeachers() {
   const { data, key, error } = await getTeachers();
-
+  const deps = (await getDepartments()).map((d) => ({
+    value: d.id,
+    label: d.name,
+  }));
   return (
     <div className="space-y-4">
       <PageTitle title="Teachers" />
+      <div className="flex items-center justify-between">
+        <DataSearch placeholder="John Doe" />
+        <DialogBox
+          description="Add a new teacher profile here. Click submit button when you're done."
+          title="Create a teacher"
+          btntext="Add Teacher"
+          Component={<AddTeacher deps={deps} />}
+        />
+      </div>
       {error && (
         <Alert className="space-y-2" variant="destructive">
           <AlertDescription>{error}</AlertDescription>
