@@ -1,5 +1,5 @@
 import PageTitle from "@/components/page-title";
-import { getAvailableHods, getDepartments } from "./actions";
+import { getDepartments } from "./actions";
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import VerticalElipsis from "@/components/icons/vertical-elipsis";
 import {
@@ -15,7 +15,6 @@ import AddDepartment from "./add-department";
 
 export default async function TheDepartments() {
   const deps = await getDepartments();
-  const teachers = await getAvailableHods();
   return (
     <div className="space-y-4">
       <PageTitle title="Departments" />
@@ -25,10 +24,10 @@ export default async function TheDepartments() {
           btntext="Add Department"
           description="Add a new department here. Click submit button when you're done."
           title="Create a new department"
-          Component={<AddDepartment teachers={teachers} />}
+          Component={<AddDepartment />}
         />
       </div>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid gridcols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {deps.map((d) => (
           <Card key={d.id} className="p-4">
             <div className="space-y-2">

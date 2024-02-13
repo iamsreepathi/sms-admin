@@ -7,10 +7,14 @@ import TeachersTable from "./table";
 import DataSearch from "@/components/data-search";
 import AddTeacher from "./add-teacher";
 import DialogBox from "@/components/dialog-box";
+import { getDepartments } from "../departments/actions";
 
-export default async function TheStudents() {
+export default async function TheTeachers() {
   const { data, key, error } = await getTeachers();
-
+  const deps = (await getDepartments()).map((d) => ({
+    value: d.id,
+    label: d.name,
+  }));
   return (
     <div className="space-y-4">
       <PageTitle title="Teachers" />
@@ -20,7 +24,7 @@ export default async function TheStudents() {
           description="Add a new teacher profile here. Click submit button when you're done."
           title="Create a teacher"
           btntext="Add Teacher"
-          Component={<AddTeacher />}
+          Component={<AddTeacher deps={deps} />}
         />
       </div>
       {error && (

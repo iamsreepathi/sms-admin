@@ -1,17 +1,27 @@
 import { PrismaClient } from "@prisma/client";
-import { fakeStudents } from "./fakers/students";
+import { fakeStudentCourses, fakeStudents } from "./fakers/students";
 import { fakeTeachers } from "./fakers/teachers";
 import {
   fakeCategories,
   fakeCourses,
   fakeDepartments,
 } from "./fakers/course-catalog";
+import { fakeSemesters, fakeStudentSemesters } from "./fakers/semesters";
 // import { fakeDepartments } from "./fakers/course-catalog";
 
 const client = new PrismaClient();
 
+async function createSemesters() {
+  const data = fakeSemesters();
+  const semesters = await client.semester.createMany({
+    data,
+  });
+  console.log(semesters);
+  console.log("semester data is seeded");
+}
+
 async function createStudents() {
-  const data = fakeStudents(50);
+  const data = await fakeStudents(client, 10);
   const students = await client.student.createMany({
     data,
   });
@@ -19,8 +29,15 @@ async function createStudents() {
   console.log("students data is seeded");
 }
 
+async function createSemesterStudents() {
+  const data = await fakeStudentSemesters(client);
+  const semStudents = await client.semester_student.createMany({ data });
+  console.log(semStudents);
+  console.log("semester students data is seeded");
+}
+
 async function createTeachers() {
-  const data = fakeTeachers(30);
+  const data = await fakeTeachers(client, 10);
   const teachers = await client.teacher.createMany({
     data,
   });
@@ -55,14 +72,33 @@ async function createCourses() {
   console.log("course data is seeded");
 }
 
+async function createStudentCourses() {
+  const data = await fakeStudentCourses(client);
+  const stuCourses = await client.student_course.createMany({ data });
+  console.log(stuCourses);
+  console.log("student courses data is seeded");
+}
+
 const main = async () => {
+  // await createDepartments();
+  // await createSemesters();
   // await createStudents();
   // await createTeachers();
-  // await createDepartments();
   // await createCategories();
   // await createCourses();
-  // const hods = await client.available_hods.findMany();
-  // console.log(hods);
+  // await createSemesterStudents();
+  // await createStudentCourses();
+  const courses = await client.course.findMany({
+    where: {
+      students: {
+        some: {
+          studentId: 1,
+          semesterId: 1,
+        },
+      },
+    },
+  });
+  console.log(courses);
 };
 
 main()

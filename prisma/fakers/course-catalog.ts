@@ -48,30 +48,19 @@ export async function fakeDepartments(client: PrismaClient) {
   let id = 0;
   const data = [];
   for (const dep in departments) {
-    const teacher = await client.teacher.findFirst({
-      where: {
-        id: {
-          gt: id,
-        },
-      },
-    });
-    if (teacher) {
-      id = teacher.id;
-      const department = {
-        name: dep,
-        shortDesc: faker.lorem.paragraph(),
-        description: faker.lorem.paragraph(8),
-        teacherId: id,
-        phone: faker.helpers.fromRegExp(/([1-9]{3}) [0-9]{3}-[0-9]{4}/),
-        email: faker.internet.email(),
-        line1: faker.location.streetAddress(),
-        line2: faker.location.secondaryAddress(),
-        city: faker.location.city(),
-        region: faker.location.state({ abbreviated: true }),
-        postalCode: faker.location.zipCode("#####"),
-      };
-      data.push(department);
-    }
+    const department = {
+      name: dep,
+      shortDesc: faker.lorem.paragraph(),
+      description: faker.lorem.paragraph(8),
+      phone: faker.helpers.fromRegExp(/([1-9]{3}) [0-9]{3}-[0-9]{4}/),
+      email: faker.internet.email(),
+      line1: faker.location.streetAddress(),
+      line2: faker.location.secondaryAddress(),
+      city: faker.location.city(),
+      region: faker.location.state({ abbreviated: true }),
+      postalCode: faker.location.zipCode("#####"),
+    };
+    data.push(department);
   }
   return data;
 }
@@ -131,6 +120,17 @@ export async function fakeCourses(client: PrismaClient) {
             min: ratings * 3,
             max: ratings * 5,
           }),
+          credits: 3,
+          capacity: faker.number.int({
+            min: 30,
+            max: 60,
+          }),
+          startDate: faker.date.soon(),
+          endDate: faker.date.soon({
+            days: 10,
+            refDate: new Date().toISOString(),
+          }),
+          location: faker.location.streetAddress(),
           teacherName: teacher.name,
           teacherId: id,
         };

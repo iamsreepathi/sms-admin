@@ -14,23 +14,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
-import { CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
-import { cn } from "@/lib/utils";
 import { addDepartment } from "./actions";
 
-export default function AddDepartment({ setOpen, teachers }) {
+export default function AddDepartment({ setOpen }) {
   const { toast } = useToast();
   const form = useForm({
     resolver: zodResolver(DepartmentSchema),
@@ -40,7 +26,6 @@ export default function AddDepartment({ setOpen, teachers }) {
       shortDesc: "",
       description: "",
       phone: "",
-      teacherId: "",
       line1: "",
       line2: "",
       city: "",
@@ -144,69 +129,6 @@ export default function AddDepartment({ setOpen, teachers }) {
                 <FormLabel>Phone</FormLabel>
                 <FormControl>
                   <Input type="text" placeholder="(625)-123 4560" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="teacherId"
-            render={({ field }) => (
-              <FormItem className="flex flex-col">
-                <FormLabel className="my-1">Head of Dept.</FormLabel>
-                <FormControl>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <FormControl>
-                        <Button
-                          variant="outline"
-                          role="combobox"
-                          className={cn(
-                            "justify-between",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          {field.value
-                            ? teachers.find((t) => t.value === field.value)
-                                ?.label
-                            : "Select Head of Dept."}
-                          <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                        </Button>
-                      </FormControl>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-[300px] p-0">
-                      <Command>
-                        <CommandInput
-                          placeholder="Search HODs..."
-                          className="h-9"
-                        />
-                        <CommandEmpty>No HOD found.</CommandEmpty>
-                        <CommandGroup>
-                          {teachers.map((t) => (
-                            <CommandItem
-                              value={t.label}
-                              key={t.value}
-                              onSelect={() => {
-                                form.setValue("teacherId", t.value);
-                                form.clearErrors("teacherId");
-                              }}
-                            >
-                              {t.label}
-                              <CheckIcon
-                                className={cn(
-                                  "ml-auto h-4 w-4",
-                                  t.value === field.value
-                                    ? "opacity-100"
-                                    : "opacity-0"
-                                )}
-                              />
-                            </CommandItem>
-                          ))}
-                        </CommandGroup>
-                      </Command>
-                    </PopoverContent>
-                  </Popover>
                 </FormControl>
                 <FormMessage />
               </FormItem>

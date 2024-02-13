@@ -22,7 +22,7 @@ export async function addDepartment(payload) {
   try {
     const data = DepartmentSchema.parse(payload);
     const res = await prisma.department.create({ data });
-    revalidatePath("/departments");
+    revalidatePath("/departments", "page");
     return { status, data: res };
   } catch (error) {
     let errors = {};

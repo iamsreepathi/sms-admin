@@ -1,7 +1,5 @@
-import PageTitle from "@/components/page-title";
 import { notFound } from "next/navigation";
 import { getCourses } from "./actions";
-import ComboBox from "./combo-box";
 import TheCourses from "./courses";
 
 export default async function TheCategories({ params, searchParams }) {

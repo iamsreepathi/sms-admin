@@ -16,35 +16,6 @@ enum Gender {
   Female
 }
 
-model student {
-  id Int @id @default(autoincrement())
-  name String
-  email String @unique
-  dob DateTime @db.Date
-  father String
-  mother String
-  admission DateTime @db.Date
-  gender Gender
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-}
-
-model teacher {
-  id Int @id @default(autoincrement())
-  name String
-  email String @unique
-  dob DateTime @db.Date
-  father String
-  mother String
-  admission DateTime @db.Date
-  gender Gender
-  subject String
-  department department?
-  courses course[]
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-}
-
 model department {
   id Int @id @default(autoincrement())
   name String @unique
@@ -57,9 +28,65 @@ model department {
   city String @db.VarChar(100)
   region String @db.Char(2)
   postalCode String @db.VarChar(6)
-  hod teacher @relation(fields: [teacherId], references: [id])
-  teacherId Int @unique
+  // hod teacher @relation(fields: [teacherId], references: [id])
+  hodId Int? @unique
+  teachers teacher[]
   categories category[]
+  students student[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model semester {
+  id Int @id @default(autoincrement())
+  name String
+  startDate DateTime @db.Date
+  endDate DateTime @db.Date
+  students semester_student[]
+  active Int @db.SmallInt
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model student {
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  dob DateTime @db.Date
+  father String
+  mother String
+  admission DateTime @db.Date
+  gender Gender
+  department department @relation(fields: [depId], references: [id], onDelete: Cascade)
+  depId Int
+  semesters semester_student[]
+  courses student_course[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+model semester_student {
+  semester semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)
+  semesterId Int
+  student student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId Int
+  active Int @db.SmallInt
+  @@id([semesterId, studentId])
+}
+
+model teacher {
+  id Int @id @default(autoincrement())
+  name String
+  email String @unique
+  dob DateTime @db.Date
+  father String
+  mother String
+  admission DateTime @db.Date
+  gender Gender
+  subject String
+  department department @relation(fields: [depId], references: [id], onDelete: Cascade)
+  depId Int
+  courses course[]
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 }
@@ -83,11 +110,26 @@ model course {
   description String @db.Text
   ratings Int @db.Integer
   overallRating Int @db.Integer
+  credits Int @db.SmallInt
+  capacity Int @db.SmallInt
+  startDate DateTime @db.Date
+  endDate DateTime @db.Date
+  location String @db.VarChar(100)
   teacherName String
   teacher teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   teacherId Int
+  students student_course[]
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
+}
+
+model student_course {
+  id Int @id @default(autoincrement())
+  student student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId Int
+  course course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId Int
+  semesterId Int
 }
 
 view available_hods {

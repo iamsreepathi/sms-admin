@@ -1,7 +1,6 @@
 "use server";
 import prisma from "@/lib/prisma";
 import { StudentSchema } from "@/lib/schema";
-import { revalidatePath } from "next/cache";
 import { ZodError } from "zod";
 
 export async function getStudents(key = 0, take = 20) {

@@ -17,7 +17,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { CalendarIcon } from "@radix-ui/react-icons";
+import { CalendarIcon, CaretSortIcon, CheckIcon } from "@radix-ui/react-icons";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
@@ -30,8 +30,15 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/components/ui/use-toast";
 import { addTeacher } from "./actions";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
 
-export default function AddTeacher({ setOpen }) {
+export default function AddTeacher({ setOpen, deps }) {
   const { toast } = useToast();
   const form = useForm({
     resolver: zodResolver(TeacherSchema),
@@ -42,8 +49,9 @@ export default function AddTeacher({ setOpen }) {
       mother: "",
       dob: "",
       admission: "",
-      gender: "Male",
+      gender: "",
       subject: "",
+      depId: "",
     },
   });
 
@@ -245,6 +253,68 @@ export default function AddTeacher({ setOpen }) {
                 <FormLabel>Primary Subject</FormLabel>
                 <FormControl>
                   <Input placeholder="Chemistry" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="depId"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel className="my-1">Department</FormLabel>
+                <FormControl>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant="outline"
+                          role="combobox"
+                          className={cn(
+                            "justify-between",
+                            !field.value && "text-muted-foreground"
+                          )}
+                        >
+                          {field.value
+                            ? deps.find((t) => t.value === field.value)?.label
+                            : "Select a Department"}
+                          <CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-[300px] p-0">
+                      <Command>
+                        <CommandInput
+                          placeholder="Search Department..."
+                          className="h-9"
+                        />
+                        <CommandEmpty>No Department Found.</CommandEmpty>
+                        <CommandGroup>
+                          {deps.map((t) => (
+                            <CommandItem
+                              value={t.label}
+                              key={t.value}
+                              onSelect={() => {
+                                form.setValue("depId", t.value);
+                                form.clearErrors("depId");
+                              }}
+                            >
+                              {t.label}
+                              <CheckIcon
+                                className={cn(
+                                  "ml-auto h-4 w-4",
+                                  t.value === field.value
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
                 </FormControl>
                 <FormMessage />
               </FormItem>

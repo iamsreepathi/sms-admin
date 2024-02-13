@@ -7,9 +7,11 @@ export async function getCourses(depId, catId = null) {
       depId,
     },
   });
+  if (!catId && categories.length) catId = categories[0].id;
+
   let courses = [];
-  if (!catId && categories.length) {
-    catId = categories[0].id;
+  if (catId) {
+    catId = +catId;
     courses = await prisma.course.findMany({
       take: 15,
       where: {
