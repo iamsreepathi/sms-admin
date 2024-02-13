@@ -9,8 +9,9 @@ import TheSquares from "./icons/squares";
 import TheUsers from "./icons/user";
 import UserGroup from "./icons/user-group";
 import TheLibrary from "./icons/library";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 
-const links = [
+export const links = [
   {
     title: "Dashboard",
     href: "/",
@@ -44,8 +45,8 @@ export default function SideBar() {
     setIsCollapsed(!isCollapsed);
   }
   return (
-    <div className="relative min-w-[90px] border-r px-3 pb-10 pt-24">
-      <div className="absolute right-[-20px] top-7">
+    <div className="relative min-w-[60px] border-r px-2 pb-10 pt-24">
+      <div className="absolute right-[-20px] top-7 hidden lg:block">
         <Button
           onClick={toggleSidebar}
           variant="secondary"
@@ -72,7 +73,7 @@ export default function SideBar() {
                   "h-9 w-9"
                 )}
               >
-                <link.icon className="h-4 w-4" />
+                <link.icon className="h-5 w-5" />
                 <span className="sr-only">{link.title}</span>
               </Link>
             ) : (
@@ -87,8 +88,8 @@ export default function SideBar() {
                   "justify-start font-semibold text-sm"
                 )}
               >
-                <link.icon className="mr-2 h-4 w-4" />
-                {link.title}
+                <link.icon className="lg:mr-2 h-5 w-5 lg:h-4 lg:w-4" />
+                <span className="hidden lg:block">{link.title}</span>
               </Link>
             )
           )}

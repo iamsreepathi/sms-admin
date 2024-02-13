@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Gender, Prisma } from "@prisma/client";
+import { Gender, Prisma, PrismaClient } from "@prisma/client";
 
 const subjects = [
   "Mathematics",
@@ -15,21 +15,25 @@ const subjects = [
   "Computer Science",
 ];
 
-export function fakeTeachers(num = 10) {
-  const teachers: Prisma.teacherCreateInput[] = [];
-
-  for (let i = 0; i < num; i++) {
-    const teacher = {
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      dob: faker.date.past(),
-      father: faker.person.fullName({ sex: "male" }),
-      mother: faker.person.fullName({ sex: "female" }),
-      admission: faker.date.past(),
-      gender: faker.helpers.arrayElement([Gender.Male, Gender.Female]),
-      subject: faker.helpers.arrayElement(subjects),
-    };
-    teachers.push(teacher);
+export async function fakeTeachers(client: PrismaClient, num = 10) {
+  const teachers = [];
+  const deps = await client.department.findMany();
+  for (let i = 0; i < deps.length; i++) {
+    const dep = deps[0];
+    for (let k = 0; k < num; k++) {
+      const teacher = {
+        name: faker.person.fullName(),
+        email: faker.internet.email(),
+        dob: faker.date.past(),
+        father: faker.person.fullName({ sex: "male" }),
+        mother: faker.person.fullName({ sex: "female" }),
+        admission: faker.date.past(),
+        gender: faker.helpers.arrayElement([Gender.Male, Gender.Female]),
+        subject: faker.helpers.arrayElement(subjects),
+        depId: dep.id,
+      };
+      teachers.push(teacher);
+    }
   }
   return teachers;
 }
