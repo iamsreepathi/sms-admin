@@ -19,6 +19,11 @@ import {
 import DetailCard from "@/components/detail-card";
 import TheCourses from "./courses";
 
+export const metadata = {
+  title: "Student Details",
+  description: "Student details",
+};
+
 export default async function TheStudent({ params }) {
   const { student, semesters } = await getStudent(params.id);
   const columns = [

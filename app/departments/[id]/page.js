@@ -18,6 +18,11 @@ import AddCategory from "./add-category";
 import { getAvailableHods } from "../actions";
 import UpdateHod from "./update-hod";
 
+export const metadata = {
+  title: "Department Details",
+  description: "Department details",
+};
+
 export default async function TheDepartment({ params }) {
   const depId = Number(params.id);
   if (!depId) return notFound();

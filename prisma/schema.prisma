@@ -132,7 +132,28 @@ model student_course {
   semesterId Int
 }
 
+model counter {
+  id Int @id @default(autoincrement())
+  model String @db.VarChar(100)
+  count BigInt @db.BigInt
+  shortDesc String @db.VarChar(255)
+  display Int @db.SmallInt
+}
+
 view available_hods {
   value Int @unique
   label String
+}
+
+model event {
+  id Int @id @default(autoincrement())
+  title String @db.VarChar(255)
+  description String @db.Text
+  start DateTime
+  end DateTime
+  location String? @db.VarChar(255)
+  organizer String @db.VarChar(100)
+  email String @db.VarChar(100)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
 }

@@ -13,6 +13,11 @@ import DataSearch from "@/components/data-search";
 import DialogBox from "@/components/dialog-box";
 import AddDepartment from "./add-department";
 
+export const metadata = {
+  title: "Departments",
+  description: "List of departments",
+};
+
 export default async function TheDepartments() {
   const deps = await getDepartments();
   return (

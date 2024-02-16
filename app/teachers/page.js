@@ -9,6 +9,11 @@ import AddTeacher from "./add-teacher";
 import DialogBox from "@/components/dialog-box";
 import { getDepartments } from "../departments/actions";
 
+export const metadata = {
+  title: "Teachers",
+  description: "List of teachers",
+};
+
 export default async function TheTeachers() {
   const { data, key, error } = await getTeachers();
   const deps = (await getDepartments()).map((d) => ({

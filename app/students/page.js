@@ -8,6 +8,11 @@ import DataSearch from "@/components/data-search";
 import DialogBox from "../../components/dialog-box";
 import AddStudent from "./add-student";
 
+export const metadata = {
+  title: "Students",
+  description: "List of students",
+};
+
 export default async function TheStudents() {
   const { data, key, error } = await getStudents();
 

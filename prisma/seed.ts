@@ -7,9 +7,29 @@ import {
   fakeDepartments,
 } from "./fakers/course-catalog";
 import { fakeSemesters, fakeStudentSemesters } from "./fakers/semesters";
+import fakeCounter from "./fakers/counter";
+import { fakeEvents } from "./fakers/events";
 // import { fakeDepartments } from "./fakers/course-catalog";
 
 const client = new PrismaClient();
+
+async function createEvents() {
+  const data = fakeEvents();
+  const events = await client.event.createMany({
+    data,
+  });
+  console.log(events);
+  console.log("events data is seeded");
+}
+
+async function createCounter() {
+  const data = await fakeCounter(client);
+  const counter = await client.counter.createMany({
+    data,
+  });
+  console.log(counter);
+  console.log("counter data is seeded");
+}
 
 async function createSemesters() {
   const data = fakeSemesters();
@@ -85,20 +105,11 @@ const main = async () => {
   // await createStudents();
   // await createTeachers();
   // await createCategories();
-  // await createCourses();
-  // await createSemesterStudents();
-  // await createStudentCourses();
-  const courses = await client.course.findMany({
-    where: {
-      students: {
-        some: {
-          studentId: 1,
-          semesterId: 1,
-        },
-      },
-    },
-  });
-  console.log(courses);
+  await createCourses();
+  await createSemesterStudents();
+  await createStudentCourses();
+  await createCounter();
+  await createEvents();
 };
 
 main()
