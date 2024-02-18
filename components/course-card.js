@@ -9,13 +9,16 @@ import {
 } from "./ui/card";
 import Link from "next/link";
 import RightArrow from "./icons/right-arrow";
+import Image from "next/image";
 
 export default function CourseCard({ course }) {
   return (
     <Card key={course.id}>
-      <img
+      <Image
         src="/images/course.jpeg"
         alt={course.name}
+        width={600}
+        height={0}
         className="object-contain rounded-t"
       />
       <CardHeader>

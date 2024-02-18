@@ -18,7 +18,7 @@ export default function TheCourses({ categories, courses, category }) {
   };
   return (
     <>
-      <div className="flex items-end justify-between">
+      <div className="space-y-4 md:space-y-0 md:flex md:items-end md:justify-between">
         <div className="space-y-2">
           <Label htmlFor="category">Choose a category</Label>
           <ComboBox

@@ -29,8 +29,9 @@ export const metadata = {
 };
 
 export default async function Home() {
-  const cards = await getCardData();
-  const events = await getUpcomingEvents();
+  const cardsData = getCardData();
+  const eventsData = getUpcomingEvents();
+  const [cards, events] = await Promise.all([cardsData, eventsData]);
   return (
     <div className="space-y-4">
       <PageTitle title="Dashboard" />

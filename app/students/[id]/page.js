@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/select";
 import DetailCard from "@/components/detail-card";
 import TheCourses from "./courses";
+import { Suspense } from "react";
 
 export const metadata = {
   title: "Student Details",
