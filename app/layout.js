@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import SideBar from "@/components/side-bar";
 import TheFooter from "@/components/the-footer";
 import { Toaster } from "@/components/ui/toaster";
+import { WebVitals } from "./web-vitals";
 
 export const fontSans = FontSans({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
           fontSans.variable
         )}
       >
+        <WebVitals />
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <SideBar />
           <div className="w-full">

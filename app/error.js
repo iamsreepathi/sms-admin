@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -6,22 +7,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Link from "next/link";
 
-export default function NotFound() {
+export default function Error({ error, reset }) {
   return (
     <div className="h-full flex items-center justify-center">
       <Card>
         <CardHeader>
-          <CardTitle className="text-red-500">Not Found</CardTitle>
-          <CardDescription>
-            Page you requested could not be found.
-          </CardDescription>
+          <CardTitle className="text-red-500">Something went wrong!</CardTitle>
+          <CardDescription>{error?.message}</CardDescription>
         </CardHeader>
         <CardFooter>
-          <Button>
-            <Link href="/">Return Home</Link>
-          </Button>
+          <Button onClick={() => reset()}>Try again</Button>
         </CardFooter>
       </Card>
     </div>

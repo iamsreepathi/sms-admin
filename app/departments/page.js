@@ -39,7 +39,7 @@ export default async function TheDepartments() {
               <div className="flex justify-between items-center">
                 <CardTitle>{d.name}</CardTitle>
                 <DropdownMenu>
-                  <DropdownMenuTrigger>
+                  <DropdownMenuTrigger aria-label="Dropdown menu">
                     <VerticalElipsis className="w-6 h-6 hover:bg-gray-100 rounded-full hover:cursor-pointer" />
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="p-2">

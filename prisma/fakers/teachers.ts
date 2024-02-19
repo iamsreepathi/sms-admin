@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Gender, Prisma, PrismaClient } from "@prisma/client";
+import { Gender, PrismaClient } from "@prisma/client";
 
 const subjects = [
   "Mathematics",
