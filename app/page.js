@@ -16,7 +16,6 @@ import CalendarDays from "@/components/icons/calendar-days";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 const icons = {
-  categories: <TheUsers className="w-5 h-5 text-gray-400" />,
   courses: <BookOpen className="w-5 h-5 text-gray-400" />,
   departments: <BuildingLibrary className="w-5 h-5 text-gray-400" />,
   teachers: <UserGroup className="w-5 h-5 text-gray-400" />,
@@ -47,7 +46,7 @@ export default async function Home() {
               )}
             </CardHeader>
             <CardContent>
-              <h2 className="font-bold text-xl">+{c.count.toString()}</h2>
+              <h3 className="font-bold text-xl">+{c.count.toString()}</h3>
               <CardDescription>{c.shortDesc}</CardDescription>
             </CardContent>
           </Card>
@@ -82,6 +81,7 @@ export default async function Home() {
 
             <div className="flex">
               <Calendar
+                role="button"
                 mode="single"
                 className="rounded-md border shadow"
                 selected={new Date()}

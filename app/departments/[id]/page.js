@@ -177,7 +177,10 @@ export default async function TheDepartment({ params }) {
                 variant="secondary"
               >
                 <span>{c.name}</span>
-                <Link href={`/departments/${depId}/categories?cat=${c.id}`}>
+                <Link
+                  aria-label={c.name}
+                  href={`/departments/${depId}/categories?cat=${c.id}`}
+                >
                   <RightArrow className="w-6 h-6 p-1 rounded-full hover:bg-gray-300" />
                 </Link>
               </Button>

@@ -1,24 +1,6 @@
-import PageTitle from "@/components/page-title";
 import { getSemesterCourses, getStudent } from "./actions";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import DetailCard from "@/components/detail-card";
 import TheCourses from "./courses";
-import { Suspense } from "react";
 
 export const metadata = {
   title: "Student Details",

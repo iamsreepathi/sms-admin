@@ -9,7 +9,6 @@ import TheSquares from "./icons/squares";
 import TheUsers from "./icons/user";
 import UserGroup from "./icons/user-group";
 import TheLibrary from "./icons/library";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 
 export const links = [
   {
@@ -65,6 +64,7 @@ export default function SideBar() {
               <Link
                 key={idx}
                 href={link.href}
+                aria-label={link.title}
                 className={cn(
                   buttonVariants({
                     variant: link.href === pathName ? "default" : "ghost",
@@ -80,6 +80,7 @@ export default function SideBar() {
               <Link
                 key={idx}
                 href={link.href}
+                aria-label={link.title}
                 className={cn(
                   buttonVariants({
                     variant: link.href === pathName ? "default" : "ghost",
