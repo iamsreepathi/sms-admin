@@ -1,15 +1,18 @@
+import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 export default function DetailCard({ detail, columns }) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-      <Card className="lg:col-span-2">
+    <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
+      <Card className="xl:col-span-2">
         <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 items-center">
           <div>
-            <img
+            <Image
               src="/images/profile.jpg"
               alt={detail.name}
-              className="rounded-t"
+              width={400}
+              height={0}
+              className="rounded"
             />
           </div>
           <div className="flex">
@@ -19,7 +22,7 @@ export default function DetailCard({ detail, columns }) {
                   <p className="font-semibold col-span-2 md:col-span-1">
                     {c.header}:
                   </p>
-                  <p>
+                  <p className="break-words">
                     {typeof detail[c.accessorKey] === "object"
                       ? detail[c.accessorKey].toDateString()
                       : detail[c.accessorKey]}

@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { Gender, Prisma, PrismaClient } from "@prisma/client";
+import { Gender, PrismaClient } from "@prisma/client";
 
 export async function fakeStudents(client: PrismaClient, num = 10) {
   const users = [];

@@ -38,7 +38,7 @@ export default function TheCourses({ semesters, data, selected }) {
           value={sem}
           onValueChange={(opt) => onSelect(opt)}
         >
-          <SelectTrigger className="w-[280px]">
+          <SelectTrigger className="w-full md:w-[280px]">
             <SelectValue placeholder="Select a Semester" />
           </SelectTrigger>
           <SelectContent>
@@ -52,10 +52,10 @@ export default function TheCourses({ semesters, data, selected }) {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
           {loading &&
             [...Array(6)].map((i, idx) => (
-              <Card>
+              <Card key={idx}>
                 <CardHeader>
                   <CardSkeleton key={idx} />
                 </CardHeader>

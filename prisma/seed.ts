@@ -105,11 +105,11 @@ const main = async () => {
   // await createStudents();
   // await createTeachers();
   // await createCategories();
-  await createCourses();
-  await createSemesterStudents();
-  await createStudentCourses();
-  await createCounter();
-  await createEvents();
+  // await createCourses();
+  // await createSemesterStudents();
+  // await createStudentCourses();
+  // await createCounter();
+  // await createEvents();
 };
 
 main()

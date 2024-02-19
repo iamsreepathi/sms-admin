@@ -17,6 +17,7 @@ import DialogBox from "@/components/dialog-box";
 import AddCategory from "./add-category";
 import { getAvailableHods } from "../actions";
 import UpdateHod from "./update-hod";
+import Image from "next/image";
 
 export const metadata = {
   title: "Department Details",
@@ -26,8 +27,11 @@ export const metadata = {
 export default async function TheDepartment({ params }) {
   const depId = Number(params.id);
   if (!depId) return notFound();
-  const { dept, hod } = await getDepartment(depId);
-  const hods = await getAvailableHods();
+  const [data, hods] = await Promise.all([
+    getDepartment(depId),
+    getAvailableHods(),
+  ]);
+  const { dept, hod } = data;
   if (!dept) return notFound();
   return (
     <div className="space-y-4">
@@ -107,9 +111,11 @@ export default async function TheDepartment({ params }) {
             {hod && (
               <div className="flex space-x-8">
                 <div>
-                  <img
+                  <Image
                     src="/images/teacher-profile.jpg"
                     alt={hod.name}
+                    width={144}
+                    height={144}
                     className="rounded-full w-36 h-36"
                   />
                 </div>
@@ -171,7 +177,10 @@ export default async function TheDepartment({ params }) {
                 variant="secondary"
               >
                 <span>{c.name}</span>
-                <Link href={`/departments/${depId}/categories?cat=${c.id}`}>
+                <Link
+                  aria-label={c.name}
+                  href={`/departments/${depId}/categories?cat=${c.id}`}
+                >
                   <RightArrow className="w-6 h-6 p-1 rounded-full hover:bg-gray-300" />
                 </Link>
               </Button>

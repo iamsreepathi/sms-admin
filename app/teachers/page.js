@@ -15,8 +15,12 @@ export const metadata = {
 };
 
 export default async function TheTeachers() {
-  const { data, key, error } = await getTeachers();
-  const deps = (await getDepartments()).map((d) => ({
+  const [teachers, departments] = await Promise.all([
+    getTeachers(),
+    getDepartments(),
+  ]);
+  const { data, key, error } = teachers;
+  const deps = departments.map((d) => ({
     value: d.id,
     label: d.name,
   }));
