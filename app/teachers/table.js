@@ -37,7 +37,7 @@ const columns = [
       return (
         <Link
           aria-label={data.name}
-          href={`students/${data.id}`}
+          href={`teachers/${data.id}`}
           variant="icon"
         >
           <RightArrow className="w-6 h-6 rounded-full hover:bg-gray-300 p-1" />
