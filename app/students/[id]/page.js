@@ -2,6 +2,7 @@ import { getSemesterCourses, getStudent } from "./actions";
 import DetailCard from "@/components/detail-card";
 import TheCourses from "./courses";
 import AdditionalDetails from "@/components/additonal-details";
+import PageTitle from "@/components/page-title";
 
 export const metadata = {
   title: "Student Details",
@@ -56,6 +57,7 @@ export default async function TheStudent({ params }) {
   const courses = await getSemesterCourses(student.id, selected.id);
   return (
     <div className="space-y-4">
+      <PageTitle title="Student Details" />
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
         <DetailCard detail={student} columns={columns} />
         <AdditionalDetails
