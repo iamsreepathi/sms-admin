@@ -22,9 +22,13 @@ export default function DetailCard({ detail, columns }) {
                   {c.header}:
                 </p>
                 <p className="break-words">
-                  {typeof detail[c.accessorKey] === "object"
-                    ? detail[c.accessorKey].toDateString()
-                    : detail[c.accessorKey]}
+                  {!c.avg
+                    ? typeof detail[c.accessorKey] === "object"
+                      ? detail[c.accessorKey].toDateString()
+                      : detail[c.accessorKey]
+                    : Math.round(
+                        (detail[c.accessorKey] / detail[c.avgKey]) * 100
+                      ) / 100}
                 </p>
               </li>
             ))}

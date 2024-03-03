@@ -11,7 +11,11 @@ export default function AdditionalDetails({ title, cols = [], data }) {
           {cols.map((c, idx) => (
             <li key={idx} className="flex justify-between">
               <p className="font-semibold">{c.header}:</p>
-              <p>{data[c.accessorKey]}</p>
+              <p className="break-words">
+                {typeof data[c.accessorKey] === "object"
+                  ? data[c.accessorKey].toDateString()
+                  : data[c.accessorKey]}
+              </p>
             </li>
           ))}
         </ul>
