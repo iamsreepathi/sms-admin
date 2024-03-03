@@ -9,6 +9,7 @@ import {
 import { fakeSemesters, fakeStudentSemesters } from "./fakers/semesters";
 import fakeCounter from "./fakers/counter";
 import { fakeEvents } from "./fakers/events";
+import * as bcrypt from "bcrypt";
 // import { fakeDepartments } from "./fakers/course-catalog";
 
 const client = new PrismaClient();
@@ -99,6 +100,21 @@ async function createStudentCourses() {
   console.log("student courses data is seeded");
 }
 
+async function createAdminUser() {
+  const data = {
+    firstName: "John",
+    lastName: "Doe",
+    email: "johndoe@gmail.com",
+    phone: "605-123-4567",
+    password: await bcrypt.hash("password", 10),
+  };
+  const user = await client.user.create({
+    data,
+  });
+  console.log(user);
+  console.log("admin user is created.");
+}
+
 const main = async () => {
   // await createDepartments();
   // await createSemesters();
@@ -110,6 +126,26 @@ const main = async () => {
   // await createStudentCourses();
   // await createCounter();
   // await createEvents();
+  // const sem = await client.semester.findFirst({ where: { active: 1 } });
+  // if (sem) {
+  //   console.log(sem);
+  //   const data = await client.student.findMany({
+  //     take: 20,
+  //     orderBy: {
+  //       name: "asc",
+  //     },
+  //     where: {
+  //       courses: {
+  //         some: {
+  //           courseId: 1728,
+  //           semesterId: sem.id,
+  //         },
+  //       },
+  //     },
+  //   });
+  //   console.log(data);
+  // }
+  // await createAdminUser();
 };
 
 main()
