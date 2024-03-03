@@ -14,14 +14,12 @@ export default function DetailCard({ detail, columns }) {
             className="rounded"
           />
         </div>
-        <div className="flex">
+        <div>
           <ul className="space-y-3 text-sm">
             {columns.map((c, idx) => (
-              <li key={idx} className="grid grid-cols-3 md:grid-cols-2">
-                <p className="font-semibold col-span-2 md:col-span-1">
-                  {c.header}:
-                </p>
-                <p className="break-words">
+              <li key={idx} className="flex">
+                <p className="font-semibold w-1/2">{c.header}:</p>
+                <p className="break-words w-1/2">
                   {!c.avg
                     ? typeof detail[c.accessorKey] === "object"
                       ? detail[c.accessorKey].toDateString()

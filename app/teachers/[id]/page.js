@@ -2,6 +2,7 @@ import AdditionalDetails from "@/components/additonal-details";
 import { getTeacher } from "./actions";
 import DetailCard from "@/components/detail-card";
 import TheCourses from "./courses";
+import PageTitle from "@/components/page-title";
 
 export const metadata = {
   title: "Teacher Details",
@@ -70,6 +71,7 @@ export default async function TheTeacher({ params }) {
   const teacher = await getTeacher(params.id);
   return (
     <div className="space-y-4">
+      <PageTitle title="Teacher Details" />
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
         <DetailCard detail={teacher} columns={columns} />
         <AdditionalDetails
