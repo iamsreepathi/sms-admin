@@ -12,6 +12,7 @@ import Link from "next/link";
 import DataSearch from "@/components/data-search";
 import DialogBox from "@/components/dialog-box";
 import AddDepartment from "./add-department";
+import { Button } from "@/components/ui/button";
 
 export const metadata = {
   title: "Departments",
@@ -23,14 +24,19 @@ export default async function TheDepartments() {
   return (
     <div className="space-y-4">
       <PageTitle title="Departments" />
-      <div className="flex items-center justify-between">
+      <div className="md:flex md:items-center md:justify-between space-y-2">
         <DataSearch placeholder="John Doe" />
-        <DialogBox
-          btntext="Add Department"
-          description="Add a new department here. Click submit button when you're done."
-          title="Create a new department"
-          Component={<AddDepartment />}
-        />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          <Link href="/semesters">
+            <Button className="w-full">List Semesters</Button>
+          </Link>
+          <DialogBox
+            btntext="Add Department"
+            description="Add a new department here. Click submit button when you're done."
+            title="Create a new department"
+            Component={<AddDepartment />}
+          />
+        </div>
       </div>
       <div className="grid gridcols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {deps.map((d) => (

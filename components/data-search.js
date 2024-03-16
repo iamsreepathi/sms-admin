@@ -6,7 +6,7 @@ import { Input } from "./ui/input";
 export default function DataSearch({ placeholder = "" }) {
   const [search, setSearch] = useState("");
   return (
-    <div className="w-1/2 flex space-x-2">
+    <div className="w-full md:w-1/2 flex space-x-2">
       <Input
         type="text"
         placeholder={placeholder}

@@ -91,6 +91,7 @@ model semester {
   startDate DateTime @db.Date
   endDate DateTime @db.Date
   students semester_student[]
+  courses semester_course[]
   active Int @db.SmallInt
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
@@ -167,6 +168,7 @@ model course {
   teacher teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   teacherId Int
   students student_course[]
+  semesters semester_course[]
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 }
@@ -204,4 +206,13 @@ model event {
   email String @db.VarChar(100)
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
+}
+
+model semester_course {
+  semester semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)
+  semesterId Int
+  course course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId Int
+  @@id([semesterId, courseId])
+  active Int @db.SmallInt
 }

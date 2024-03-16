@@ -14,5 +14,61 @@ export async function getCourse(courseId) {
     },
   });
   if (!course) notFound();
-  return course;
+  const semesters = await prisma.semester.findMany({
+    orderBy: {
+      startDate: "desc",
+    },
+    select: {
+      id: true,
+      name: true,
+      active: true,
+    },
+    where: {
+      courses: {
+        some: {
+          courseId: course.id,
+        },
+      },
+    },
+  });
+  return { course, semesters };
+}
+
+export async function getCourseSemesters(courseId) {
+  const id = Number(courseId);
+  if (!id) notFound();
+  return await prisma.semester.findMany({
+    take: 20,
+    orderBy: {
+      startDate: "desc",
+    },
+    select: {
+      id: true,
+      name: true,
+      active: true,
+    },
+    where: {
+      courses: {
+        some: {
+          courseId,
+        },
+      },
+    },
+  });
+}
+
+export async function getCourseStudents(courseId, semesterId) {
+  courseId = Number(courseId);
+  semesterId = Number(semesterId);
+  if (!courseId || !semesterId) return [];
+  return await prisma.student.findMany({
+    where: {
+      courses: {
+        some: {
+          courseId,
+          semesterId,
+        },
+      },
+    },
+  });
 }
