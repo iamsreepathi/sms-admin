@@ -3,8 +3,10 @@ export { default } from "next-auth/middleware";
 export const config = {
   matcher: [
     "/auth/signup",
-    // "/students/:path*",
-    // "/teachers/:path*",
-    // "/departments/:path*",
+    "/courses/:path*",
+    "/departments/:path*",
+    "/semesters/:path*",
+    "/students/:path*",
+    "/teachers/:path*",
   ],
 };
