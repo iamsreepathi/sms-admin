@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { registerUser } from "./actions";
 
 export default function SignUpForm() {
   const { toast } = useToast();
@@ -30,29 +29,12 @@ export default function SignUpForm() {
   });
 
   const onSubmit = async (data) => {
-    const res = await registerUser(data);
-    if (res.status === 422) {
-      for (const key in res.errors) {
-        form.setError(key, {
-          type: "server",
-          message: res.errors[key],
-        });
-      }
-      return;
-    }
-    if (res.status === 500) {
-      toast({
-        variant: "destructive",
-        title: "Server Error",
-        description: res.errors.server,
-      });
-      return;
-    }
+    /** Make user registration action and handle server side validation*/
     form.reset();
     toast({
       variant: "success",
-      title: "Student Created",
-      description: `New student ${res.data.name} is successfully admitted.`,
+      title: "User Registration",
+      description: `New user ${data.firstName} is successfully registered.`,
     });
   };
   return (
@@ -105,7 +87,7 @@ export default function SignUpForm() {
               <FormItem>
                 <FormLabel>Phone</FormLabel>
                 <FormControl>
-                  <Input placeholder="Doe" {...field} />
+                  <Input placeholder="123-456-7890" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
