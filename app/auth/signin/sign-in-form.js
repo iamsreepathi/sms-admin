@@ -22,8 +22,8 @@ export default function SignInForm({ callbackUrl }) {
   const form = useForm({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
-      email: "",
-      password: undefined,
+      email: "johndoe@example.com",
+      password: "password",
     },
   });
 
@@ -76,11 +76,7 @@ export default function SignInForm({ callbackUrl }) {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Enter password"
-                    {...field}
-                  />
+                  <Input type="password" placeholder="password" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
