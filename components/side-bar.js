@@ -4,7 +4,6 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "./ui/button";
 import { usePathname } from "next/navigation";
-import ChevronRight from "./icons/chevron-right";
 import TheSquares from "./icons/squares";
 import TheUsers from "./icons/user";
 import UserGroup from "./icons/user-group";
