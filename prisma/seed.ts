@@ -108,7 +108,7 @@ async function createAdminUser() {
   const data = {
     firstName: "John",
     lastName: "Doe",
-    email: "johndoe@gmail.com",
+    email: "johndoe@example.com",
     phone: "605-123-4567",
     password: await bcrypt.hash("password", 10),
   };
