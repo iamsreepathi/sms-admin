@@ -83,3 +83,27 @@ export async function fakeStudentSemesters(client: PrismaClient) {
   }
   return semesterStudents;
 }
+
+export async function fakeSemesterCourses(client: PrismaClient) {
+  const semesterCourses = [];
+  const semesters = await client.semester.findMany({
+    where: {
+      startDate: {
+        lte: new Date(),
+      },
+    },
+  });
+  const courses = await client.course.findMany({
+    take: 100,
+  });
+  for (const course of courses) {
+    for (const sem of semesters) {
+      semesterCourses.push({
+        semesterId: sem.id,
+        courseId: course.id,
+        active: sem.active,
+      });
+    }
+  }
+  return semesterCourses;
+}

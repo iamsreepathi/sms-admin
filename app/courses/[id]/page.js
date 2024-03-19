@@ -1,7 +1,8 @@
 import AdditionalDetails from "@/components/additonal-details";
 import DetailCard from "@/components/detail-card";
-import { getCourse } from "./actions";
+import { getCourse, getCourseStudents } from "./actions";
 import PageTitle from "@/components/page-title";
+import TheStudents from "./students";
 
 export const metadata = {
   title: "Course Details",
@@ -65,7 +66,9 @@ const teacherCols = [
 ];
 
 export default async function TheTeacher({ params }) {
-  const course = await getCourse(params.id);
+  const { course, semesters } = await getCourse(params.id);
+  const selected = semesters.find((s) => s.active) ?? {};
+  const students = await getCourseStudents(course.id, selected.id);
   return (
     <div className="space-y-4">
       <PageTitle title="Course Details" />
@@ -77,6 +80,7 @@ export default async function TheTeacher({ params }) {
           title="Instructor Details"
         />
       </div>
+      <TheStudents semesters={semesters} selected={selected} data={students} />
     </div>
   );
 }

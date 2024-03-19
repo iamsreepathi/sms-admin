@@ -6,7 +6,11 @@ import {
   fakeCourses,
   fakeDepartments,
 } from "./fakers/course-catalog";
-import { fakeSemesters, fakeStudentSemesters } from "./fakers/semesters";
+import {
+  fakeSemesterCourses,
+  fakeSemesters,
+  fakeStudentSemesters,
+} from "./fakers/semesters";
 import fakeCounter from "./fakers/counter";
 import { fakeEvents } from "./fakers/events";
 import * as bcrypt from "bcrypt";
@@ -115,6 +119,15 @@ async function createAdminUser() {
   console.log("admin user is created.");
 }
 
+async function createSemeterCourses() {
+  const data = await fakeSemesterCourses(client);
+  const semCourses = await client.semester_course.createMany({
+    data,
+  });
+  console.log(semCourses);
+  console.log("semester courses are created.");
+}
+
 const main = async () => {
   // await createDepartments();
   // await createSemesters();
@@ -126,26 +139,23 @@ const main = async () => {
   // await createStudentCourses();
   // await createCounter();
   // await createEvents();
-  // const sem = await client.semester.findFirst({ where: { active: 1 } });
-  // if (sem) {
-  //   console.log(sem);
-  //   const data = await client.student.findMany({
-  //     take: 20,
-  //     orderBy: {
-  //       name: "asc",
-  //     },
-  //     where: {
-  //       courses: {
-  //         some: {
-  //           courseId: 1728,
-  //           semesterId: sem.id,
-  //         },
+  const data = await client.semester.findMany({
+    orderBy: {
+      startDate: "asc",
+    },
+  });
+  console.log(data);
+  // const data = await client.course.findMany({
+  //   where: {
+  //     semesters: {
+  //       some: {
+  //         semesterId: 1,
   //       },
   //     },
-  //   });
-  //   console.log(data);
-  // }
+  //   },
+  // });
   // await createAdminUser();
+  // await createSemeterCourses();
 };
 
 main()

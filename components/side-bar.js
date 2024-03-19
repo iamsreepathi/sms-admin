@@ -48,7 +48,11 @@ export default function SideBar() {
   return (
     <div className="relative min-w-[60px] border-r px-2 pb-10 pt-4">
       <div className="flex justify-between items-center pb-6 px-4">
-        {!isCollapsed && <PageTitle title="SMS" className="hidden lg:block" />}
+        {!isCollapsed && (
+          <Link href="/">
+            <PageTitle title="SMS" className="hidden lg:block" />
+          </Link>
+        )}
         <Button
           onClick={toggleSidebar}
           variant="secondary"
