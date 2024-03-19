@@ -6,9 +6,14 @@ import {
   fakeCourses,
   fakeDepartments,
 } from "./fakers/course-catalog";
-import { fakeSemesters, fakeStudentSemesters } from "./fakers/semesters";
+import {
+  fakeSemesterCourses,
+  fakeSemesters,
+  fakeStudentSemesters,
+} from "./fakers/semesters";
 import fakeCounter from "./fakers/counter";
 import { fakeEvents } from "./fakers/events";
+import * as bcrypt from "bcrypt";
 // import { fakeDepartments } from "./fakers/course-catalog";
 
 const client = new PrismaClient();
@@ -99,6 +104,30 @@ async function createStudentCourses() {
   console.log("student courses data is seeded");
 }
 
+async function createAdminUser() {
+  const data = {
+    firstName: "John",
+    lastName: "Doe",
+    email: "johndoe@gmail.com",
+    phone: "605-123-4567",
+    password: await bcrypt.hash("password", 10),
+  };
+  const user = await client.user.create({
+    data,
+  });
+  console.log(user);
+  console.log("admin user is created.");
+}
+
+async function createSemeterCourses() {
+  const data = await fakeSemesterCourses(client);
+  const semCourses = await client.semester_course.createMany({
+    data,
+  });
+  console.log(semCourses);
+  console.log("semester courses are created.");
+}
+
 const main = async () => {
   // await createDepartments();
   // await createSemesters();
@@ -110,6 +139,23 @@ const main = async () => {
   // await createStudentCourses();
   // await createCounter();
   // await createEvents();
+  const data = await client.semester.findMany({
+    orderBy: {
+      startDate: "asc",
+    },
+  });
+  console.log(data);
+  // const data = await client.course.findMany({
+  //   where: {
+  //     semesters: {
+  //       some: {
+  //         semesterId: 1,
+  //       },
+  //     },
+  //   },
+  // });
+  // await createAdminUser();
+  // await createSemeterCourses();
 };
 
 main()

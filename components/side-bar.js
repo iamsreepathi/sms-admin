@@ -9,6 +9,8 @@ import TheSquares from "./icons/squares";
 import TheUsers from "./icons/user";
 import UserGroup from "./icons/user-group";
 import TheLibrary from "./icons/library";
+import TheHamburger from "./icons/hamburger";
+import PageTitle from "./page-title";
 
 export const links = [
   {
@@ -44,21 +46,26 @@ export default function SideBar() {
     setIsCollapsed(!isCollapsed);
   }
   return (
-    <div className="relative min-w-[60px] border-r px-2 pb-10 pt-24">
-      <div className="absolute right-[-20px] top-7 hidden lg:block">
+    <div className="relative min-w-[60px] border-r px-2 pb-10 pt-4">
+      <div className="flex justify-between items-center pb-6 px-4">
+        {!isCollapsed && (
+          <Link href="/">
+            <PageTitle title="SMS" className="hidden lg:block" />
+          </Link>
+        )}
         <Button
           onClick={toggleSidebar}
           variant="secondary"
-          className="rounded-full p-2"
+          className="p-2 block"
         >
-          <ChevronRight />
+          <TheHamburger className="h-4 w-4" />
         </Button>
       </div>
       <div
         data-collapsed={isCollapsed}
         className="group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2"
       >
-        <nav className="grid gap-2 px-4 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
+        <nav className="grid gap-2 pl-2 pr-6 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
           {links.map((link, idx) =>
             isCollapsed ? (
               <Link

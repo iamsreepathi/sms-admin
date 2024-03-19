@@ -16,6 +16,54 @@ enum Gender {
   Female
 }
 
+model account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user user @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model user {
+  id            String    @id @default(cuid())
+  firstName     String
+  lastName      String
+  password      String
+  email         String    @unique
+  emailVerified DateTime?
+  phone         String
+  image         String?
+  accounts      account[]
+  sessions      session[]
+}
+
+model verification_token {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
 model department {
   id Int @id @default(autoincrement())
   name String @unique
@@ -43,6 +91,7 @@ model semester {
   startDate DateTime @db.Date
   endDate DateTime @db.Date
   students semester_student[]
+  courses semester_course[]
   active Int @db.SmallInt
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
@@ -119,6 +168,7 @@ model course {
   teacher teacher @relation(fields: [teacherId], references: [id], onDelete: Cascade)
   teacherId Int
   students student_course[]
+  semesters semester_course[]
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 }
@@ -156,4 +206,13 @@ model event {
   email String @db.VarChar(100)
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
+}
+
+model semester_course {
+  semester semester @relation(fields: [semesterId], references: [id], onDelete: Cascade)
+  semesterId Int
+  course course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId Int
+  @@id([semesterId, courseId])
+  active Int @db.SmallInt
 }
