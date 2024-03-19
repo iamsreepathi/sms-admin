@@ -34,7 +34,7 @@ export default function SignUpForm() {
     toast({
       variant: "success",
       title: "User Registration",
-      description: `New user ${data.firstName} is successfully registered.`,
+      description: `New user ${data.firstName} is successfully registered. This is a demo site and we are not actually persisting users in database.`,
     });
   };
   return (
